@@ -126,6 +126,14 @@ def plot_items(signal=None, ann_samp=None, ann_sym=None, fs=None,
     if ecg_grids:
         plot_ecg_grids(ecg_grids, fs, sig_units, time_units, axes)
 
+    # Use the same X range for all subplots.  (If sharex is true, the X
+    # axes are linked and this isn't needed.)
+    if len(axes) > 1:
+        xmin = min(a.get_xlim()[0] for a in axes)
+        xmax = max(a.get_xlim()[1] for a in axes)
+        for a in axes:
+            a.set_xlim(xmin, xmax)
+
     # Add title and axis labels.
     # First, make sure that xlabel and ylabel inputs are valid
     if xlabel:
